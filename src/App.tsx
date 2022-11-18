@@ -47,7 +47,7 @@ const App:React.FC = () => {
                     return obj;
                 })
                 setAgendaList([...agendaList, obj])
-                return;
+                return true;
              })
              console.log(rows.slice(1))
              setLoading(false)
