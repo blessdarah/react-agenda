@@ -27,6 +27,22 @@ export const exportColumns: ColumnsType<Agenda> = [
         dataIndex: 'startDate',
         key: 'startDate',
         filtered: true,
+    },
+    {
+        title: 'End date',
+        dataIndex: 'endDate',
+        key: 'endDate',
+        filtered: true,
+    },
+]
+
+export const agendaColumns: ColumnsType<Agenda> = [
+    ...exportColumns,
+    {
+        title: 'Start date',
+        dataIndex: 'startDate',
+        key: 'startDate',
+        filtered: true,
         render: (_, record) => moment(record.startDate).utc().format('D MMM, Y').toString()
     },
     {
@@ -36,10 +52,6 @@ export const exportColumns: ColumnsType<Agenda> = [
         filtered: true,
         render: (_, record) => moment(record.endDate).utc().format('D MMM, Y').toString()
     },
-]
-
-export const agendaColumns: ColumnsType<Agenda> = [
-    ...exportColumns,
     {
         title: 'Options',
         dataIndex: 'endDate',

@@ -19,6 +19,7 @@ const AgendaTable: React.FC = () => {
                         columns={agendaColumns}
                         rowKey={'id'}
                         size="small"
+                        scroll={{x: '1000'}}
                     /> 
                 </ExcelExportWrapper>
             : <Empty description="No agenda records at the moment. Click the add record to add a new agenda item" />

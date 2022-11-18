@@ -3,9 +3,9 @@ import React, { useState } from 'react';
 import {PlusOutlined, UploadOutlined, CalendarOutlined, BarsOutlined} from '@ant-design/icons'
 import AgendaTable from './components/agenda/agenda-table';
 import AgendaForm from './components/agenda/agenda.form';
-import { useSetRecoilState } from 'recoil';
-import { agendaState } from './recoil/atoms/agenda-atom';
-import { emptyAgenda } from './models/agenda.model';
+import { useRecoilState, useSetRecoilState } from 'recoil';
+import { agendaListState, agendaState } from './recoil/atoms/agenda-atom';
+import { Agenda, emptyAgenda } from './models/agenda.model';
 import { useAppModal } from './components/common/app-modal';
 import 'antd/dist/reset.css';
 import './App.css';
@@ -18,8 +18,8 @@ const App:React.FC = () => {
     const {setOpen, setTitle, setContent} = useAppModal()
     const [loading, setLoading] = useState(false)
     const [view, setView] = useState('table-view')
-
     const setAgenda = useSetRecoilState(agendaState)
+    const [agendaList, setAgendaList] = useRecoilState(agendaListState)
 
     const handleClick = () => {
        setAgenda(emptyAgenda)
@@ -35,8 +35,21 @@ const App:React.FC = () => {
     const beforeUpload = (file: RcFile) => {
        readXlsxFile(file)
           .then((rows) => {
+            const agendaKeys = Object.keys(emptyAgenda)
              // TODO: Convert each row to agenda obj
              // TODO: Register each agenda object
+             rows.slice(1).map(row => {
+                const entries: any = []
+                let obj: any;
+                row.map((cell, index) => {
+                    const agendaKey = agendaKeys[index] as keyof Agenda
+                    entries.push([agendaKey, cell.toString()]);
+                    obj = Object.fromEntries(entries);
+                    obj.id = new Date().getTime()
+                })
+                console.log('obj: ', obj)
+                setAgendaList([...agendaList, obj])
+             })
              console.log(rows.slice(1))
              setLoading(false)
          })
@@ -44,7 +57,7 @@ const App:React.FC = () => {
 
   return (
     <div className="container">
-            <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
+            <header className="app-header">
                 <Typography.Title>Agenda</Typography.Title>
                 <Space>
                     <Button onClick={handleClick} icon={<PlusOutlined />} type="primary">Create record</Button>
@@ -57,7 +70,7 @@ const App:React.FC = () => {
                           <Button loading={loading} icon={<UploadOutlined />}>Upload from file</Button>
                     </Upload>
                 </Space>
-            </div>
+            </header>
         
             <Segmented 
                 options={[{
