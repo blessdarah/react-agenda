@@ -1,18 +1,23 @@
-import { Button, PageHeader } from 'antd';
-import React from 'react';
+import { Button, Modal, PageHeader } from 'antd';
+import React, { useState } from 'react';
 import './App.css';
 import {PlusOutlined} from '@ant-design/icons'
 import AgendaTable from './components/agenda/agenda-table';
 import AgendaForm from './components/agenda/agenda.form';
-import { useModalContext } from './contexts/modal-context';
+import { useSetRecoilState } from 'recoil';
+import { agendaState } from './recoil/atoms/agenda-atom';
+import { emptyAgenda } from './models/agenda.model';
+import { useAppModal } from './components/common/app-modal';
 
 const App:React.FC = () => {
-    const {setShowModal, setContent, setTitle} = useModalContext()
+    const {setOpen, setTitle, setContent} = useAppModal()
+    const setAgenda = useSetRecoilState(agendaState)
 
     const handleClick = () => {
-       setTitle("Create new record")
-       setContent(<AgendaForm />)
-       setShowModal(true)
+       setAgenda(emptyAgenda)
+       setTitle("Create agenda")
+       setContent(<AgendaForm mode="create" />)
+       setOpen(true)
     }
   return (
     <div className="container">
@@ -27,7 +32,8 @@ const App:React.FC = () => {
                 <Button onClick={handleClick} icon={<PlusOutlined />}>Create record</Button>,
               ]}
             />
-        <AgendaTable />
+        
+            <AgendaTable />
     </div>
   );
 }

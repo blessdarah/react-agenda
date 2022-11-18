@@ -3,16 +3,19 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import { AppModalProvider } from './contexts/modal-context';
+import { RecoilRoot } from 'recoil';
+import { AppModalProvider } from './components/common/app-modal';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
   <React.StrictMode>
-      <AppModalProvider>
-        <App />
-      </AppModalProvider>
+      <RecoilRoot>
+        <AppModalProvider>
+            <App />
+        </AppModalProvider>
+      </RecoilRoot>
   </React.StrictMode>
 );
 

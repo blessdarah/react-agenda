@@ -1,6 +1,5 @@
-import moment from "moment";
-
 export type Agenda = {
+    id: number;
     title: string;
     description: string;
     location: string;
@@ -10,9 +9,10 @@ export type Agenda = {
 }
 
 export const emptyAgenda: Agenda = {
-    title: "test",
-    description: "description",
-    location: "Bamenda",
+    id: new Date().getTime(),
+    title: "",
+    description: "",
+    location: "",
     startDate: "",
     endDate: "",
     isAllDay: false

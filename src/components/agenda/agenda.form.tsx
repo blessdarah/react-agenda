@@ -1,15 +1,31 @@
-import { Button, Col, DatePicker, Form, Input, Row, Space } from 'antd'
+import { Button, Col, DatePicker, Form, Input, message, Row, Space } from 'antd'
 import React, { useState } from 'react'
+import { useRecoilState } from 'recoil'
 import { Agenda, emptyAgenda } from '../../models/agenda.model'
+import { agendaListState } from '../../recoil/atoms/agenda-atom'
 
-const AgendaForm: React.FC = () => {
+type Props = {
+    mode: "edit" | "create"
+    agenda?: Agenda
+}
+
+const AgendaForm: React.FC<Props> = ({mode, agenda = emptyAgenda}) => {
+    const [agendaList, setAgendaList] = useRecoilState(agendaListState)
     const [loading, setLoading] = useState(false)
     const [form] = Form.useForm()
-
+    
     const onFinish = (values: Agenda) => {
         setLoading(true)
-        console.log('values: ', values)
+        if(mode === 'create') {
+           setAgendaList([...agendaList, {...values, id: new Date().getTime()}]) 
+            message.success("Item created successfully")
+        }else {
+            const others = agendaList.filter(item => item.id !== agenda.id)
+            setAgendaList([...others, {...values, id: new Date().getTime()}])
+            message.success("Item updated successfully")
+        }
         setLoading(false)
+        form.resetFields()
     }
 
     return (
@@ -17,7 +33,7 @@ const AgendaForm: React.FC = () => {
             name="agenda-form"
             form={form}
             onFinish={onFinish}
-            initialValues={emptyAgenda}
+            initialValues={agenda}
             layout="vertical"
         >
            <Form.Item
