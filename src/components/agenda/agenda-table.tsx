@@ -4,7 +4,7 @@ import { useRecoilValue } from 'recoil';
 import { Agenda } from '../../models/agenda.model';
 import { agendaListState } from '../../recoil/atoms/agenda-atom';
 import ExcelExportWrapper from '../common/excel-export-wrapper';
-import { agendaColumns } from './agenda-table.columns';
+import { agendaColumns, exportColumns } from './agenda-table.columns';
 
 const AgendaTable: React.FC = () => {
     const agendaList = useRecoilValue(agendaListState) 
@@ -13,7 +13,7 @@ const AgendaTable: React.FC = () => {
        <>
         {
             agendaList.length > 0 ?
-                <ExcelExportWrapper columns={agendaColumns} data={agendaList}>
+                <ExcelExportWrapper columns={exportColumns} data={agendaList}>
                     <Table<Agenda>
                         dataSource={agendaList}
                         columns={agendaColumns}

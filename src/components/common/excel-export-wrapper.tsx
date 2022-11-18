@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react'
+import React from 'react'
 import { Button, Card } from 'antd'
 import { Excel } from 'antd-table-saveas-excel'
 
@@ -22,9 +22,7 @@ const ExcelExportWrapper: React.FC<Props> = ({
         excel
             .addSheet(sheetName)
             .addColumns(columns)
-            .addDataSource(data, {
-                str2Percent: true,
-            })
+            .addDataSource(data)
             .saveAs(`${fileName}.xlsx`)
     }
     return (

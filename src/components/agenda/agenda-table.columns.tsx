@@ -3,7 +3,7 @@ import moment from "moment"
 import { Agenda } from "../../models/agenda.model"
 import AgendaTableOptions from "./agenda-table-options"
 
-export const agendaColumns: ColumnsType<Agenda> = [
+export const exportColumns: ColumnsType<Agenda> = [
     {
         title: 'Title',
         dataIndex: 'title',
@@ -36,6 +36,10 @@ export const agendaColumns: ColumnsType<Agenda> = [
         filtered: true,
         render: (_, record) => moment(record.endDate).utc().format('D MMM, Y').toString()
     },
+]
+
+export const agendaColumns: ColumnsType<Agenda> = [
+    ...exportColumns,
     {
         title: 'Options',
         dataIndex: 'endDate',
