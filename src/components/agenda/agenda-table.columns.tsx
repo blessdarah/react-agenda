@@ -1,4 +1,4 @@
-import { ColumnsType } from "antd/lib/table"
+import { ColumnsType } from "antd/es/table"
 import moment from "moment"
 import { Agenda } from "../../models/agenda.model"
 import AgendaTableOptions from "./agenda-table-options"
