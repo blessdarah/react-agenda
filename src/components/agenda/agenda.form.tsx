@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 import { useRecoilState } from 'recoil'
 import { Agenda, emptyAgenda } from '../../models/agenda.model'
 import { agendaListState } from '../../recoil/atoms/agenda-atom'
+import { useAppModal } from '../common/app-modal'
 
 type Props = {
     mode: "edit" | "create"
@@ -13,6 +14,7 @@ const AgendaForm: React.FC<Props> = ({mode, agenda = emptyAgenda}) => {
     const [agendaList, setAgendaList] = useRecoilState(agendaListState)
     const [loading, setLoading] = useState(false)
     const [form] = Form.useForm()
+    const {setOpen} = useAppModal()
     
     const onFinish = (values: Agenda) => {
         setLoading(true)
@@ -26,6 +28,7 @@ const AgendaForm: React.FC<Props> = ({mode, agenda = emptyAgenda}) => {
         }
         setLoading(false)
         form.resetFields()
+        setOpen(false)
     }
 
     return (

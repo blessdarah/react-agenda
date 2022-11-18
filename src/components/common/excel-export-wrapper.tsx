@@ -27,6 +27,7 @@ const ExcelExportWrapper: React.FC<Props> = ({
     }
     return (
         <Card
+            title="Agenda list"
             size="small"
             extra={<Button onClick={excelExport}>Export to excel</Button>}
         >
