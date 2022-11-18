@@ -36,9 +36,7 @@ const App:React.FC = () => {
        readXlsxFile(file)
           .then((rows) => {
             const agendaKeys = Object.keys(emptyAgenda)
-             // TODO: Convert each row to agenda obj
-             // TODO: Register each agenda object
-             rows.slice(1).map(row => {
+             rows.slice(1).map(row => { // remove heading before uploading
                 const entries: any = []
                 let obj: any;
                 row.map((cell, index) => {
@@ -46,9 +44,10 @@ const App:React.FC = () => {
                     entries.push([agendaKey, cell.toString()]);
                     obj = Object.fromEntries(entries);
                     obj.id = new Date().getTime()
+                    return obj;
                 })
-                console.log('obj: ', obj)
                 setAgendaList([...agendaList, obj])
+                return;
              })
              console.log(rows.slice(1))
              setLoading(false)
