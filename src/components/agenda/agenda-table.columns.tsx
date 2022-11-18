@@ -1,9 +1,9 @@
 import { ColumnsType } from "antd/es/table"
-import moment from "moment"
+import dayjs from "dayjs"
 import { Agenda } from "../../models/agenda.model"
 import AgendaTableOptions from "./agenda-table-options"
 
-export const exportColumns: ColumnsType<Agenda> = [
+export const commonFields: ColumnsType<Agenda> = [
     {
         title: 'Title',
         dataIndex: 'title',
@@ -22,6 +22,10 @@ export const exportColumns: ColumnsType<Agenda> = [
         key: 'location',
         filtered: true,
     },
+]
+
+export const exportColumns: ColumnsType<Agenda> = [
+    ...commonFields,
     {
         title: 'Start date',
         dataIndex: 'startDate',
@@ -37,20 +41,20 @@ export const exportColumns: ColumnsType<Agenda> = [
 ]
 
 export const agendaColumns: ColumnsType<Agenda> = [
-    ...exportColumns,
+    ...commonFields,
     {
         title: 'Start date',
         dataIndex: 'startDate',
         key: 'startDate',
         filtered: true,
-        render: (_, record) => moment(record.startDate).utc().format('D MMM, Y').toString()
+        render: (_, record) => dayjs(record.startDate).format('MMM DD, YYYY | hh:mm')
     },
     {
         title: 'End date',
         dataIndex: 'endDate',
         key: 'endDate',
         filtered: true,
-        render: (_, record) => moment(record.endDate).utc().format('D MMM, Y').toString()
+        render: (_, record) => dayjs(record.endDate).format('MMM DD, YYYY | hh:mm')
     },
     {
         title: 'Options',

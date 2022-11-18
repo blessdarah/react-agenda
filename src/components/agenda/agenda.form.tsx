@@ -32,6 +32,7 @@ const AgendaForm: React.FC<Props> = ({mode, agenda = emptyAgenda}) => {
     }
 
     return (
+    <>
         <Form
             name="agenda-form"
             form={form}
@@ -42,18 +43,34 @@ const AgendaForm: React.FC<Props> = ({mode, agenda = emptyAgenda}) => {
            <Form.Item
             name="title"
             label="Title"
+            rules={[{
+                required: true,
+                message: "Title is required"
+            }]}
            >
                 <Input placeholder="Title" />
            </Form.Item>
            <Form.Item
             name="description"
             label="Description"
+            requiredMark
+            rules={[{
+                required: true,
+                message: "Description is required",
+            }, {
+                min: 10,
+                message: "Description should have a min of 10 characters"
+            }]}
            >
                 <Input placeholder="Title" />
            </Form.Item>
            <Form.Item
             name="location"
             label="Location"
+            rules={[{
+                required: true,
+                message: "Location is required",
+            }]}
            >
                 <Input placeholder="location"/>
            </Form.Item>
@@ -62,6 +79,10 @@ const AgendaForm: React.FC<Props> = ({mode, agenda = emptyAgenda}) => {
                    <Form.Item
                     name="startDate"
                     label="Start date"
+                    rules={[{
+                        required: true,
+                        message: "Start date is required",
+                    }]}
                    >
                         <DatePicker style={{width: '100%'}} showTime/>
                    </Form.Item>
@@ -70,6 +91,10 @@ const AgendaForm: React.FC<Props> = ({mode, agenda = emptyAgenda}) => {
                    <Form.Item
                     name="endDate"
                     label="Start date"
+                    rules={[{
+                        required: true,
+                        message: "End date is required",
+                    }]}
                    >
                         <DatePicker style={{width: '100%'}} showTime/>
                    </Form.Item>
@@ -79,6 +104,7 @@ const AgendaForm: React.FC<Props> = ({mode, agenda = emptyAgenda}) => {
                 </Space>
             </Row>
         </Form>
+        </>
     )
 }
 
